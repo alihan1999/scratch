@@ -11,6 +11,8 @@ def train(model,epoch,labels,lr=0.01):
         ypreds = [model(x) for x in xs]
         l = [(ypred-label)**2 for label,ypred in zip(labels,ypreds)]
         Loss = sum(l,Value(0.0))
+        for p in model.parameters():
+            p.grad = 0.0
         Loss.backward()
         GD(model.parameters(),lr)
         print(f"epoch: {e+1} , Loss: {Loss.data}")
